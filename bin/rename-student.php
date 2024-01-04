@@ -6,8 +6,10 @@ use Alura\Doctrine\Helper\EntityManagerCreator;
 require_once __DIR__ . '/../vendor/autoload.php';
 
 $entityManager = EntityManagerCreator::createEntityManager();
+$studentRepository = $entityManager->getRepository(Student::class);
 
-$student = new Student($argv[1], (isset($argv[2]) ? new DateTime($argv[2]) : null));
 
-$entityManager->persist($student);
+$student = $studentRepository->find($argv[1]);
+$student->setName($argv[2]);
+
 $entityManager->flush();

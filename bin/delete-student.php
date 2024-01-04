@@ -7,7 +7,8 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 $entityManager = EntityManagerCreator::createEntityManager();
 
-$student = new Student($argv[1], (isset($argv[2]) ? new DateTime($argv[2]) : null));
+/** @var Student $student */
+$student = $entityManager->getPartialReference(Student::class, $argv[1]);
 
-$entityManager->persist($student);
+$entityManager->remove($student);
 $entityManager->flush();
