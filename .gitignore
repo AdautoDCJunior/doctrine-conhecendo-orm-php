@@ -1,0 +1,6 @@
+# VSCode
+.vscode/
+
+# Composer
+composer.phar
+vendor/
