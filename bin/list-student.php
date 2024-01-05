@@ -1,5 +1,6 @@
 <?php
 
+use Alura\Doctrine\Entity\Course;
 use Alura\Doctrine\Entity\Phone;
 use Alura\Doctrine\Entity\Student;
 use Alura\Doctrine\Helper\EntityManagerCreator;
@@ -18,13 +19,27 @@ foreach ($studentList as $student) {
 
     echo "ID: $studentId | Nome: $studentName | Telefones: ";
 
-    echo implode(
-        ' - ',
-        $student
-            ->getPhones()
-            ->map(fn (Phone $phone) => $phone->getNumber())
-            ->toArray()
-    );
+    echo $student->getPhones()->count() > 0 ?
+        implode(
+            ' - ',
+            $student
+                ->getPhones()
+                ->map(fn (Phone $phone) => $phone->getNumber())
+                ->toArray()
+        ) :
+        'Nenhum telefone cadastrado';
+
+    echo ' | Cursos: ';
+
+    echo $student->getCourses()->count() > 0 ?
+        implode(
+            ' - ',
+            $student
+                ->getCourses()
+                ->map(fn (Course $course) => $course->getName())
+                ->toArray()
+        ) :
+        'Nenhum curso cadastrado';
 
     echo PHP_EOL . PHP_EOL;
 }

@@ -13,7 +13,7 @@ class Phone
 {
     #[Id, GeneratedValue, Column]
     private int $id;
-    #[ManyToOne(targetEntity: Student::class, inversedBy: 'phones')]
+    #[ManyToOne(Student::class, inversedBy: 'phones')]
     private Student $student;
 
     public function __construct(
