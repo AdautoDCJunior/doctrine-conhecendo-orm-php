@@ -8,10 +8,13 @@ use Alura\Doctrine\Helper\EntityManagerCreator;
 require_once __DIR__ . '/../vendor/autoload.php';
 
 $entityManager = EntityManagerCreator::createEntityManager();
-$studentRepository = $entityManager->getRepository(Student::class);
+
+$studentClass = Student::class;
+
+$dql = "SELECT student FROM $studentClass student";
 
 /** @var Student[] $studentList */
-$studentList = $studentRepository->findAll();
+$studentList = $entityManager->createQuery($dql)->getResult();
 
 foreach ($studentList as $student) {
     $studentId = $student->getId();
@@ -47,4 +50,4 @@ foreach ($studentList as $student) {
 // $result = $studentRepository->findOneBy(['name' => 'Primeiro Aluno']);
 // var_dump($result);
 
-echo 'QTD Registros: ' . $studentRepository->count([]) . PHP_EOL;
+echo 'QTD Registros: ' . count($studentList) . PHP_EOL;
