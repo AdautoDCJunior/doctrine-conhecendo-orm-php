@@ -3,29 +3,48 @@
 namespace Alura\Doctrine\Entity;
 
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\OneToMany;
 
 #[Entity]
 class Student
 {
-    #[Id]
-    #[GeneratedValue]
-    #[Column]
+    #[Id, GeneratedValue, Column]
     private int $id;
+    #[OneToMany('student', Phone::class, ['persist', 'remove'])]
+    private Collection $phones;
 
     public function __construct(
         #[Column]
         private string $name,
         #[Column(nullable: true)]
         private ?DateTime $birthdate = null,
-    ) { }
+    ) {
+        $this->phones = new ArrayCollection();
+    }
 
     public function getId(): int
     {
         return $this->id;
+    }
+
+    public function addPhone(Phone $phone): void
+    {
+        $this->phones->add($phone);
+        $phone->setStudent($this);
+    }
+
+    /**
+     * @return Collection<Phone>
+     */
+    public function getPhones(): Collection
+    {
+        return $this->phones;
     }
 
     public function setName(string $newName): void
