@@ -1,5 +1,6 @@
 <?php
 
+use Alura\Doctrine\Entity\Phone;
 use Alura\Doctrine\Entity\Student;
 use Alura\Doctrine\Helper\EntityManagerCreator;
 
@@ -15,10 +16,20 @@ foreach ($studentList as $student) {
     $studentId = $student->getId();
     $studentName = $student->getName();
 
-    echo "ID: $studentId | Nome: $studentName" . PHP_EOL;
+    echo "ID: $studentId | Nome: $studentName | Telefones: ";
+
+    echo implode(
+        ' - ',
+        $student
+            ->getPhones()
+            ->map(fn (Phone $phone) => $phone->getNumber())
+            ->toArray()
+    );
+
+    echo PHP_EOL . PHP_EOL;
 }
 
-$result = $studentRepository->findOneBy(['name' => 'Beatriz Suave']);
-var_dump($result);
+// $result = $studentRepository->findOneBy(['name' => 'Primeiro Aluno']);
+// var_dump($result);
 
-echo $studentRepository->count([]) . PHP_EOL;
+echo 'QTD Registros: ' . $studentRepository->count([]) . PHP_EOL;
