@@ -18,6 +18,7 @@ class StudentRepository extends EntityRepository
             ->leftJoin('stu.phones', 'pho')
             ->leftJoin('stu.courses', 'cou')
             ->getQuery()
+            ->enableResultCache(86400)
             ->getResult();
     }
 }
