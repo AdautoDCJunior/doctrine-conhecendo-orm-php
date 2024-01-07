@@ -5,5 +5,8 @@
 composer.phar
 vendor/
 
+# Application cache
+var/
+
 # Database
 *.sqlite
